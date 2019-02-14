@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns   = "http://www.w3.org/ns/widgets"
+    xmlns:gap   = "http://phonegap.com/ns/1.0"
+    id          = "com.phonegap.marble"
+    versionCode = "10"
+    version     = "1.0.0" >
+
+<!-- versionCode is optional and Android only -->
+
+  <name>Marble</name>
+
+  <description>
+	  Define complex mathematical functions and play with them!
+	  Reach the blue goal with your marbles and use your mathematical expertise to construct the perfect way for your marbles to reach that goal.
+  </description>
+
+  <author href="https://github.com/Quoteme/complexGrapher" email="">
+      Luca Leon Happel
+  </author>
+
+  <icon src="icon.png" />
+
+</widget>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Marble</title>
+		<link rel="stylesheet" href="style.css" type="text/css" media="all">
+		<link rel="shortcut icon" href="icon.png" />
+	</head>
+	<body>
+		<script src="js/math.min.js" charset="utf-8"></script>
+		<script src="js/three.min.js" charset="utf-8"></script>
+		<script src="js/OrbitControls.js"></script>
+		<script src="js/app.js" charset="utf-8"></script>
+		<script type="text/javascript" src="dat.gui.min.js"></script>
+		<script charset="utf-8">
+			var controllers = [];
+			var gui = new dat.GUI();
+			gui.add(f, 'f(z)');
+			var defPos = gui.addFolder('start');
+			defPos.add(start.position, 'x', -100, 100);
+			defPos.add(start.position, 'y', -10 , 100);
+			defPos.add(start.position, 'z', -100, 100);
+			gui.add({ addBall:function(){
+				entities.push( new Ball(
+					start.position.x + 2*math.random(),
+					start.position.y + 2*math.random(),
+					start.position.z + 2*math.random(),
+				) );
+				scene.add(entities[entities.length-1].mesh);
+				var tmp = gui.addFolder(`entities[${entities.length}]`)
+				tmp.add(entities[entities.length-1],'moving');
+				tmp.add(entities[entities.length-1],'resetPosition');
+				tmp.add(entities[entities.length-1].mesh.position,'x', -100,100).listen();
+				tmp.add(entities[entities.length-1].mesh.position,'y', -100,100).listen();
+				tmp.add(entities[entities.length-1].mesh.position,'z', -100,100).listen();
+				//
+				tmp.add(entities[entities.length-1],'resetVelocity');
+				tmp.add(entities[entities.length-1].velocity,'x');
+				tmp.add(entities[entities.length-1].velocity,'y');
+				tmp.add(entities[entities.length-1].velocity,'z');
+				controllers.push(tmp);
+
+			}}, 'addBall')
+			//
+			gui.add({ randomPosition:function(){
+				entities.forEach( e=>{
+					e.mesh.position.x = -100+ math.random()*200;
+					e.mesh.position.z = -100+ math.random()*200;
+					e.mesh.position.y = f.compiled.eval(math.complex(e.mesh.position.x,e.mesh.position.z)).re+10;
+					e.resetVelocity();
+				})
+			}}, 'randomPosition')
+			gui.add({ update:function(){
+				f.compiled = math.compile(f["f(z)"]);
+				updatePlane(plane,(z)=>math.eval(f["f(z)"],{"z":z}) );
+			}}, 'update')
+
+			gui.domElement.onmouseenter=()=>controls.enabled=false;
+			gui.domElement.onmouseleave=()=>controls.enabled=true;
+		</script>
+	</body>
+</html>

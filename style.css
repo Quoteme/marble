@@ -1,0 +1,12 @@
+body {
+	margin: 0px;
+	background-color: #000000;
+	overflow: hidden;
+}
+#controls{
+	position: fixed;
+	background-color: #161616;
+	color: #eee;
+	left: 0;
+	top: 0;
+}
